@@ -6,6 +6,7 @@ import { useAuth } from '../../Contexts/AuthContext';
 const Index = () => {
 
     const { authenticated } = useAuth();
+    const token = localStorage.getItem('token');
 
     const [courses, setCourses] = useState([]);
 
@@ -13,18 +14,23 @@ const Index = () => {
 
         console.log("hello");
 
-        axios.get('/courses')
+        axios.get('/courses', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
              .then(response => {
-                console.log(response.data);
-                setCourses(response.data);
+                const data = response.data.data
+                console.log(data);
+                setCourses(data);
              })
              .catch(error => {
                 console.error(error);
              })
     }, []);
 
-    // {(courses.length === 0) ? <h3>There are no Courses</h3> : null}
-    
+    {(courses.length === 0) ? <h3>There are no Courses</h3> : null}
+ 
     const coursesList = courses.map(course => {
         return (
             <div key={course.id}>
@@ -34,12 +40,10 @@ const Index = () => {
                 ) : (
                     <p><b>Title: </b> {course.title}</p>
                 )}
-                
+          
+
                 <p><b>Description: </b> {course.description}</p>
-                {/* {(authenticated) ? (
-                    <DeleteBtn resource="festivals" id={festival._id} deleteCallback={removeFestival} />
-                ) : ""} */}
-                
+
                 <hr />
             </div>
         )
@@ -47,10 +51,11 @@ const Index = () => {
 
     return (
         <>
-           <h2>List Of Courses</h2>
-            { coursesList }
+            <h2>Courses List</h2>
+            {coursesList}
         </>
-    )
+    );
+    
 }
 
 export default Index
