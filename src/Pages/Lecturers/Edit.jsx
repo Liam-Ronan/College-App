@@ -7,15 +7,14 @@ const Edit = () => {
 
   const navigate = useNavigate();
   const { id } = useParams();
-  const [course, setCourse] = useState(null);
+  const [lecturer, setLecturer] = useState(null);
   const [errors, setErrors] = useState({});
 
   const [form, setForm] = useState({
-      title: "",
-      description: "",
-      city: "",
-      start_date: "",
-      end_date: ""
+      name: "",
+      address: "",
+      email: "",
+      phone: "",
   });
 
   const errorStyle = {
@@ -25,7 +24,7 @@ const Edit = () => {
   let token = localStorage.getItem('token');
 
   useEffect(() => {
-    axios.get(`/courses/${id}`, {
+    axios.get(`/lecturers/${id}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -33,7 +32,7 @@ const Edit = () => {
     .then(response => {
         console.log(response.data.data);
 
-        setCourse(response.data.data);
+        setLecturer(response.data.data);
         setForm(response.data.data);
     })
     .catch(err => {
@@ -74,16 +73,16 @@ const submitForm = (e) => {
   e.preventDefault();
   console.log('submitted', form);
 
-  if(isRequired(['title', 'description', 'code', 'points', 'level'])){
+  if(isRequired(['name', 'address', 'email', 'phone'])){
       let token = localStorage.getItem('token');
 
-      axios.put(`/courses/${id}`, form, {
+      axios.put(`/lecturers/${id}`, form, {
           headers: {
               "Authorization": `Bearer ${token}`
           }
       })
       .then(response => {
-          navigate(`/courses/${id}`);
+          navigate(`/lecturers/${id}`);
       })
       .catch(err => {
           console.error(err);
@@ -91,62 +90,52 @@ const submitForm = (e) => {
   }
 };
 
-  if(!course) return <h3>Festival not found</h3>
+  if(!lecturer) return <h3>Lecturer not found</h3>
 
   return (
     <>
-        <h2>Edit Course</h2>
+        <h2>Edit Lecturer</h2>
         <form onSubmit={submitForm}>
 
-          <div>Title: 
+            <div>Name: 
               <input 
                 type='text' 
                 onChange={handleForm} 
-                value={form.title} 
-                name='title' />
+                value={form.name} 
+                name='name' />
                 
-                <span style={errorStyle}>{errors.title?.message}</span>
-          </div>
+                <span style={errorStyle}>{errors.name?.message}</span>
+            </div>
 
-          <div>Code: 
-              <input 
-                type='text'
-                onChange={handleForm} 
-                value={form.code} 
-                name='code'/>
+            <div>Address: 
+                <input 
+                    type='text'
+                    onChange={handleForm} 
+                    value={form.address} 
+                    name='address'/>
 
-                <span style={errorStyle}>{errors.code?.message}</span>
-          </div>
+                    <span style={errorStyle}>{errors.address?.message}</span>
+            </div>
 
-          <div>Description: 
-              <input 
-                type='text' 
-                onChange={handleForm} 
-                value={form.description} 
-                name='description'/>
+            <div>Email: 
+                <input 
+                    type='text' 
+                    onChange={handleForm} 
+                    value={form.email} 
+                    name='email'/>
 
-                <span style={errorStyle}>{errors.description?.message}</span>
-          </div>
+                    <span style={errorStyle}>{errors.email?.message}</span>
+            </div>
 
-          <div>Points: 
-              <input 
-                type='text' 
-                onChange={handleForm} 
-                value={form.points} 
-                name='points'/>
+            <div>Phone: 
+                <input 
+                    type='text' 
+                    onChange={handleForm} 
+                    value={form.phone} 
+                    name='phone'/>
 
-                <span style={errorStyle}>{errors.points?.message}</span>
-          </div>
-
-          <div>Level: 
-              <input 
-              type='text' 
-              onChange={handleForm} 
-              value={form.level} 
-              name='level'/>
-
-              <span style={errorStyle}>{errors.level?.message}</span>
-          </div>
+                    <span style={errorStyle}>{errors.phone?.message}</span>
+            </div>
 
             <input type='submit' />
         </form>

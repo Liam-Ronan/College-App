@@ -8,13 +8,10 @@ const Index = () => {
     const { authenticated } = useAuth();
     const token = localStorage.getItem('token');
 
-    const [courses, setCourses] = useState([]);
+    const [lecturers, setlecturers] = useState([]);
 
     useEffect(() => {
-
-        console.log("hello");
-
-        axios.get('/courses', {
+        axios.get('/lecturers', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -22,29 +19,28 @@ const Index = () => {
              .then(response => {
                 const data = response.data.data
 
-                console.log('Courses data:', data);
-                setCourses(data);
+                console.log('Lecturers data:', data);
+                setlecturers(data);
              })
              .catch(error => {
                 console.error(error);
              })
     }, []);
 
-    if(courses.length === 0) return <h3>There are no Courses</h3>;
-    
- 
-    const coursesList = courses.map(course => {
+    if(lecturers.length === 0) return <h3>There are no Lecturers</h3>;
+
+    const lecturersList = lecturers.map(lecturer => {
         return (
-            <div key={course.id}>
+            <div key={lecturer.id}>
 
                 {(authenticated) ? (
-                    <p><b>Title: </b> <Link to={`/courses/${course.id}`}>{course.title}</Link></p>
+                    <p><b>Name: </b> <Link to={`/lecturers/${lecturer.id}`}>{lecturer.name}</Link></p>
                 ) : (
-                    <p><b>Title: </b> {course.title}</p>
+                    <p><b>Name: </b> {lecturer.name}</p>
                 )}
           
 
-                <p><b>Description: </b> {course.description}</p>
+                <p><b>address: </b> {lecturer.address}</p>
 
                 <hr />
             </div>
@@ -53,12 +49,11 @@ const Index = () => {
 
     return (
         <>
-            <h2>Courses List</h2>
-            <Link to="/Courses/Create">Create Course</Link>
-            {coursesList}
+            <h2>Lecturers List</h2>
+            <Link to="/Lecturers/Create">Create Lecturer</Link>
+            {lecturersList}
         </>
-    );
-    
+    )
 }
 
-export default Index
+export default Index;

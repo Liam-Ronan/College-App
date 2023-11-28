@@ -8,13 +8,13 @@ const Show = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const [course, setCourse] = useState(null);
+  const [lecturer, setLecturer] = useState(null);
 
   let token = localStorage.getItem('token');
 
   useEffect(() => {
 
-    axios.get(`/courses/${id}`, {
+    axios.get(`/lecturers/${id}`, {
       headers: {
           'Authorization': `Bearer ${token}`
       }
@@ -22,8 +22,8 @@ const Show = () => {
       .then(response => {
           const data = response.data.data
 
-          console.log('Course data:', data);
-          setCourse(data);
+          console.log('Single Lecturer data:', data);
+          setLecturer(data);
       })
       .catch(error => {
           console.error(`Error: ${error}`);
@@ -31,24 +31,23 @@ const Show = () => {
 
   }, [id])
 
-  if(!course) {
+  if(!lecturer) {
     return (
-      <h2>Course data unavailable</h2>
+      <h2>Lecturer data unavailable</h2>
     )
   }
 
   return (
     <>
         
-            <h2>Course</h2>
+            <h2>Lecturer</h2>
             <div>
-                <p><b>Title: </b> {course.title}</p>
-                <p><b>Description: </b> {course.description}</p>
-                <p><b>Code: </b> {course.code.toUpperCase()}</p>
-                <p><b>Level: </b> {course.level}</p>
-                <p><b>Points: </b> {course.points}</p>
-                <Link to={`/Courses/${id}/Edit`}>Edit</Link>
-                <DeleteButton id={course.id} resource="courses" deleteCallback={() => navigate('/courses')} /> 
+                <p><b>Name: </b> {lecturer.name}</p>
+                <p><b>Address: </b> {lecturer.address}</p>
+                <p><b>Email: </b> {lecturer.email}</p>
+                <p><b>Phone Number: </b> {lecturer.phone}</p>
+                <Link to={`/Lecturers/${id}/Edit`}>Edit</Link>
+                <DeleteButton id={lecturer.id} resource="lecturers" deleteCallback={() => navigate('/lecturers')} /> 
             </div>
         
     </>

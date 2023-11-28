@@ -15,6 +15,18 @@ import CoursesShow from './Pages/Courses/Show';
 import CoursesCreate from './Pages/Courses/Create';
 import CoursesEdit from './Pages/Courses/Edit';
 
+//Lecturers Pages
+import LecturersIndex from './Pages/Lecturers/Index';
+import LecturersShow from './Pages/Lecturers/Show';
+import LecturersCreate from './Pages/Lecturers/Create';
+import LecturersEdit from './Pages/Lecturers/Edit';
+
+//Enrolments Pages
+import EnrolmentsIndex from './Pages/Enrolments/Index';
+import EnrolmentsShow from './Pages/Enrolments/Show';
+import EnrolmentsCreate from './Pages/Enrolments/Create';
+import EnrolmentsEdit from './Pages/Enrolments/Edit';
+
 function App() {
 
   const { authenticated, onAuthenticated } = useAuth();
@@ -30,9 +42,20 @@ function App() {
   if(authenticated){
     protectedRoutes = (
       <>
+        {/* Courses */}
         <Route path='/Courses/Create' element={<CoursesCreate />} />
         <Route path='/Courses/:id/Edit' element={<CoursesEdit />} />
         <Route path='/Courses/:id' element={<CoursesShow />} />
+
+        {/* Lecturers */}
+        <Route path='/Lecturers/Create' element={<LecturersCreate />} />
+        <Route path='/Lecturers/:id/Edit' element={<LecturersEdit />} />
+        <Route path='/Lecturers/:id' element={<LecturersShow />} />
+
+        {/* Enrolments */}
+        <Route path='/Enrolments/Create' element={<EnrolmentsCreate />} />
+        <Route path='/Enrolments/:id/Edit' element={<EnrolmentsEdit />} />
+        <Route path='/Enrolments/:id' element={<EnrolmentsShow />} />
       </>
     );
   }
@@ -43,6 +66,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/Courses' element={<CoursesIndex />} />
+        <Route path='/Lecturers' element={<LecturersIndex />} />
+        <Route path='/Enrolments' element={<EnrolmentsIndex />} />
         {protectedRoutes}
 
         <Route path='*' element={<PageNotFound />} />

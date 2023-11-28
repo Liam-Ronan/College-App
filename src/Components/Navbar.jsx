@@ -15,8 +15,8 @@ const Navbar = () => {
         <>
             <Link to="/">Home</Link> |
             <Link to="/Courses">All Courses</Link> |
-            <Link to="/Courses">All Lecturers</Link> |
-            <Link to="/Courses">All Enrolments</Link> |
+            <Link to="/Lecturers">All Lecturers</Link> |
+            <Link to="/Enrolments">All Enrolments</Link> |
 
             {(authenticated) ? (
                 <button onClick={logout}>Logout</button>
