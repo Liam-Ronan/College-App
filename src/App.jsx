@@ -6,7 +6,7 @@ import { useAuth } from './Contexts/AuthContext';
 import Navbar from './Components/Navbar';
 
 //Import Pages
-import Home from './Pages/Home';
+/* import Home from './Pages/Home'; */
 import PageNotFound from './Pages/PageNotFound';
 
 //Courses Pages
@@ -26,6 +26,7 @@ import EnrolmentsIndex from './Pages/Enrolments/Index';
 import EnrolmentsShow from './Pages/Enrolments/Show';
 import EnrolmentsCreate from './Pages/Enrolments/Create';
 import EnrolmentsEdit from './Pages/Enrolments/Edit';
+import LoginForm from './Pages/LoginForm';
 
 function App() {
 
@@ -62,9 +63,8 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<LoginForm />} />
         <Route path='/Courses' element={<CoursesIndex />} />
         <Route path='/Lecturers' element={<LecturersIndex />} />
         <Route path='/Enrolments' element={<EnrolmentsIndex />} />
