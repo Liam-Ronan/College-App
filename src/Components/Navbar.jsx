@@ -13,14 +13,21 @@ const Navbar = () => {
 
     return (
         <>
-            <Link to="/">Home</Link> |
-            <Link to="/Courses">All Courses</Link> |
-            <Link to="/Lecturers">All Lecturers</Link> |
-            <Link to="/Enrolments">All Enrolments</Link> |
+            {(authenticated) ? (
+                <>
+                    <Link to="/Home">Home</Link> |
+                    <Link to="/Courses">All Courses</Link> |
+                    <Link to="/Lecturers">All Lecturers</Link> |
+                    <Link to="/Enrolments">All Enrolments</Link> |
+                </>
+
+            ) : null}
+
 
             {(authenticated) ? (
                 <button onClick={logout}>Logout</button>
             ) : ""}
+
         </>
     );
 };

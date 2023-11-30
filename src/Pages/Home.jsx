@@ -12,6 +12,7 @@ const Home = () => {
         ) : (
           <>
             <p>You are authenticated</p>
+            
           </>
 
         )}
