@@ -54,7 +54,7 @@ const LoginForm = () => {
 
             <div className="flex-1 w-1/2 h-full bg-gray-800 flex items-center justify-center flex-col">
                 <img src={CollegeSVG} alt="" className="h-3/5 w-4/5" />
-                <h1 className='text-4xl text-white font-light p-2'>Enrolment <strong className='font-colour'>EcoSystem</strong></h1>
+                <h1 className='text-4xl text-white font-light p-2'>Enrolment <strong className='font-colour underline underline-offset-8 font-bold'>EcoSystem</strong></h1>
                 <p className='text-center max-w-xl text-xl p-2 text-white font-sans'>Navigate a rich landscape of courses and resources, where each decision opens doors to new learning and growth.</p>
             </div>
 
@@ -62,7 +62,7 @@ const LoginForm = () => {
                 <div className="max-w-xl p-8 bg-white ring ring-gray-300 ring-opacity-50 shadow-xl rounded-xl p-16 w-full">
                     {/* Your login form HTML goes here */}
                     <img src={gradPNG} alt="" className="mx-auto h-32 w-32 p-2" />
-                    <h2 className="text-center text-5xl font-light mb-4 font-sans p-2">Welcome <strong className='font-colour font-bold'>Back</strong></h2>
+                    <h2 className="text-center text-5xl font-light mb-4 font-sans p-2">Welcome <strong className='font-colour font-bold underline underline-offset-8'>Back</strong></h2>
                     <h3 className='text-2xl font-light m-5 text-center'>Please enter your details</h3>
 
                    
