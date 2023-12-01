@@ -7,13 +7,11 @@ const Home = () => {
 
   return (
     <>
+
         {(!authenticated) ? (
             <LoginForm />      
         ) : (
-          <>
-            <p>You are authenticated</p>
-          </>
-
+          <p>You are authenticated</p>
         )}
         
       </>
