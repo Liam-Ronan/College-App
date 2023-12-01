@@ -12,6 +12,7 @@ const Home = () => {
             <LoginForm />      
         ) : (
           <p>You are authenticated</p>
+            
         )}
         
       </>
