@@ -2,3 +2,31 @@
 .font-colour {
     color: #edb51c;
 }
+
+.slider-link {
+    color: #ffffff;
+    position: relative;
+}
+
+.slider-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: #edb51c;
+
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 300ms ease-in;
+}
+
+.slider-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.slider-link:hover {
+    color: #edb51c;
+}
