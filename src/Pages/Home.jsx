@@ -5,6 +5,9 @@ import { useAuth } from '../Contexts/AuthContext';
 
 import Hero from '../Components/Hero';
 import Sponsors from '../Components/Sponsors';
+import Features from '../Components/Features';
+import Tagline from '../Components/Tagline';
+import Footer from '../Components/Footer';
 
 const Popup = ({ message, onClose }) => (
   <div className="popup">
@@ -48,6 +51,9 @@ const Home = () => {
           <h1 className='text-center font-semibold text-[24px] py-5 text-white'>{showPopup && <Popup message="You are authenticated" onClose={closePopup} />}</h1>
           <Hero />
           <Sponsors />
+          <Features />
+          <Tagline />
+          <Footer />
         </>
       )}
     </div>

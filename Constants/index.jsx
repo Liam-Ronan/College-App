@@ -18,12 +18,6 @@ export const CompanyLogos = [
         height: 150,
     },
     {
-        Company: "Ford",
-        Image: "/src/Assets/logos/ford-8.svg",
-        width: 150,
-        height: 150,
-    },
-    {
         Company: "TikTok",
         Image: "/src/Assets/logos/Tiktok Black Round.svg",
         width: 150,
