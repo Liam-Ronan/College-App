@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css'
 
 //Images
-import CollegeSVG from '../Assets/Online learning-cuate.svg';
+import CollegeSVG from '../Assets/Cartoons/Online learning-cuate.svg';
 import gradPNG from '../../public/graduation-hat.png';
 
 

@@ -65,14 +65,16 @@ function App() {
     <Router>
       <Navbar/>
       <Routes>
-        <Route path='/' element={<LoginForm />} />
-        <Route path='/Home' element={<Home />} />
-        <Route path='/Courses' element={<CoursesIndex />} />
-        <Route path='/Lecturers' element={<LecturersIndex />} />
-        <Route path='/Enrolments' element={<EnrolmentsIndex />} />
-        {protectedRoutes}
+        
+          <Route path='/' element={<LoginForm />} />
+          <Route path='/Home' element={<Home />} />
+          <Route path='/Courses' element={<CoursesIndex />} />
+          <Route path='/Lecturers' element={<LecturersIndex />} />
+          <Route path='/Enrolments' element={<EnrolmentsIndex />} />
+          {protectedRoutes}
 
-        <Route path='*' element={<PageNotFound />} />
+          <Route path='*' element={<PageNotFound />} />
+       
       </Routes>
     </Router>
   )

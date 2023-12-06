@@ -25,7 +25,7 @@ const Navbar = () => {
                         <div>
                             <Link to="/Home" className='flex items-center'>
                                 <img src={gradPNG} alt="" className="h-16 w-16 p-3" />
-                                <h1 className='text-2xl text-white font-light pb-2'>Enrolment <strong className='font-colour font-bold slider-link pb-1'>EcoSystem</strong></h1>
+                                <h1 className='text-2xl text-white font-light pb-2'>Enrolment <strong className='font-colour font-bold pb-1'>EcoSystem</strong></h1>
                             </Link>
                         </div>
                     
