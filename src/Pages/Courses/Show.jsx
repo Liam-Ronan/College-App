@@ -47,7 +47,11 @@ const Show = () => {
                 <p><b>Code: </b> {course.code.toUpperCase()}</p>
                 <p><b>Level: </b> {course.level}</p>
                 <p><b>Points: </b> {course.points}</p>
-                <Link to={`/Courses/${id}/Edit`}>Edit</Link>
+                <Link to={`/Courses/${id}/Edit`}>
+                  <button className='bg-blue-500 text-white font-bold py-2 mt-3 px-5 rounded-full'>
+                    Edit Course
+                  </button>
+                </Link>
                 <DeleteButton id={course.id} resource="courses" deleteCallback={() => navigate('/courses')} /> 
             </div>
         

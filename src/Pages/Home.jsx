@@ -7,7 +7,7 @@ import Hero from '../Components/Hero';
 import Sponsors from '../Components/Sponsors';
 import Features from '../Components/Features';
 import Tagline from '../Components/Tagline';
-import Footer from '../Components/Footer';
+
 
 const Popup = ({ message, onClose }) => (
   <div className="popup">
@@ -53,7 +53,7 @@ const Home = () => {
           <Sponsors />
           <Features />
           <Tagline />
-          <Footer />
+         
         </>
       )}
     </div>

@@ -27,6 +27,7 @@ import EnrolmentsShow from './Pages/Enrolments/Show';
 import EnrolmentsCreate from './Pages/Enrolments/Create';
 import EnrolmentsEdit from './Pages/Enrolments/Edit';
 import LoginForm from './Pages/LoginForm';
+import Footer from './Components/Footer';
 
 function App() {
 
@@ -62,7 +63,8 @@ function App() {
   }
 
   return (
-    <Router>
+   
+      <Router>
       <Navbar/>
       <Routes>
         
@@ -76,7 +78,9 @@ function App() {
           <Route path='*' element={<PageNotFound />} />
        
       </Routes>
+      <Footer/>
     </Router>
+ 
   )
 }
 

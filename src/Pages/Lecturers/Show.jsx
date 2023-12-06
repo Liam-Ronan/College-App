@@ -46,7 +46,11 @@ const Show = () => {
                 <p><b>Address: </b> {lecturer.address}</p>
                 <p><b>Email: </b> {lecturer.email}</p>
                 <p><b>Phone Number: </b> {lecturer.phone}</p>
-                <Link to={`/Lecturers/${id}/Edit`}>Edit</Link>
+                <Link to={`/Lecturers/${lecturer.id}/Edit`}>
+                  <button className='bg-blue-500 text-white font-bold py-2 mt-3 px-5 rounded-full'>
+                    Edit Lecturer
+                  </button>
+                </Link>
                 <DeleteButton id={lecturer.id} resource="lecturers" deleteCallback={() => navigate('/lecturers')} /> 
             </div>
         
