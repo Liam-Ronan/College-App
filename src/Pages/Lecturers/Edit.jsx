@@ -2,6 +2,7 @@ import { useState, useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../../Config/api';
 import React from 'react'
+import Tagline from '../../Components/Tagline';
 
 const Edit = () => {
 
@@ -94,51 +95,66 @@ const submitForm = (e) => {
 
   return (
     <>
-        <h2>Edit Lecturer</h2>
-        <form onSubmit={submitForm}>
+    <div className='p-8'>
+      <h2 className='text-center p-3 text-4xl font-medium'>Edit<strong className='font-colour font-bold'> Lecturer</strong></h2>
+      <div className='flex justify-center items-center'> 
+          <form className='w-1/2' onSubmit={submitForm}>
 
-            <div>Name: 
-              <input 
-                type='text' 
-                onChange={handleForm} 
-                value={form.name} 
-                name='name' />
-                
-                <span style={errorStyle}>{errors.name?.message}</span>
-            </div>
-
-            <div>Address: 
+            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 font-sans w-full'>
+            <h2 className='ml-3 p-2'>Name: </h2>
                 <input 
-                    type='text'
-                    onChange={handleForm} 
-                    value={form.address} 
-                    name='address'/>
-
-                    <span style={errorStyle}>{errors.address?.message}</span>
+                  className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                  type='text' 
+                  onChange={handleForm} 
+                  value={form.name} 
+                  name='name' />
+                  
+                  <span style={errorStyle}>{errors.name?.message}</span>
             </div>
 
-            <div>Email: 
+            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <h2 className='ml-3 p-2'>Address: </h2>
                 <input 
-                    type='text' 
-                    onChange={handleForm} 
-                    value={form.email} 
-                    name='email'/>
+                className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                  type='text'
+                  onChange={handleForm} 
+                  value={form.address} 
+                  name='address'/>
 
-                    <span style={errorStyle}>{errors.email?.message}</span>
+                  <span style={errorStyle}>{errors.address?.message}</span>
             </div>
 
-            <div>Phone: 
+            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <h2 className='ml-3 p-2'>Email:</h2>
                 <input 
-                    type='text' 
-                    onChange={handleForm} 
-                    value={form.phone} 
-                    name='phone'/>
+                className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                  type='email' 
+                  onChange={handleForm} 
+                  value={form.email} 
+                  name='email'/>
 
-                    <span style={errorStyle}>{errors.phone?.message}</span>
+                  <span style={errorStyle}>{errors.email?.message}</span>
             </div>
 
-            <input type='submit' />
-        </form>
+            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <h2 className='ml-3 p-2'>Phone:</h2>
+                <input 
+                className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                  type='text' 
+                  onChange={handleForm} 
+                  value={form.phone} 
+                  name='phone'/>
+
+                  <span style={errorStyle}>{errors.phone?.message}</span>
+            </div>
+
+            <div className='text-center flex justify-center pt-5'>
+              <input className='bg-[#edb51c] text-white font-bold py-2 mb-5 px-10 rounded-full' type='submit' />
+            </div>
+          </form>
+        </div>
+    </div>
+    <Tagline />
     </>
   )
 }
