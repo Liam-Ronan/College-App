@@ -7,7 +7,7 @@ const CourseCard = ({ course, authenticated, handleDeleteCallback }) => {
     
       <div className="bg-gray-900 p-6 mb-2 rounded-2xl w-full h-full">
         {authenticated ? (
-          <p className="mb-2 text-blue-500 font-medium">
+          <p className="mb-2 text-blue-500 font-medium font-colour">
             <Link to={`/courses/${course.id}`}>{course.title}</Link>
           </p>
         ) : (

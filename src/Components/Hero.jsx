@@ -11,7 +11,7 @@ const Hero = () => {
         <p className='text-white mb-6 max-w-2xl font-light text-xl pb-3'>
           Our web app simplifies learning, making it a breeze for users to explore and excel in their educational journey. Discover a delightful learning experience with our user-friendly platform.
         </p>
-        <button className='bg-[#edb51c] text-white font-bold text-xl p-2 px-4 rounded-full'>
+        <button className='bg-[#edb51c] text-white font-bold py-2 mb-10 px-5 rounded-full'>
           Learn more
         </button>
       </div>

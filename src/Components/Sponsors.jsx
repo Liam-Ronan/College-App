@@ -29,7 +29,7 @@ const Sponsors = () => {
                     Join us in shaping the future of education – become a valued partner and embark on a collaborative journey toward innovation and excellence.
                     </p>
                 </div>
-            <button className='bg-[#edb51c] text-white font-bold py-2 mb-10 px-4 rounded-full'>
+            <button className='bg-[#edb51c] text-white font-bold py-2 mb-10 px-5 rounded-full'>
                  Become a Partner
             </button>
         </div>

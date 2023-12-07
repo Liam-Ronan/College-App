@@ -7,7 +7,7 @@ const Tagline = () => {
       <p className="text-lg max-w-xl mx-auto mb-8">
         At the intersection of innovation and education, we foster a community where minds are empowered to explore, learn, and create. Our commitment to excellence shapes inspiring futures, unlocking limitless potential for every learner.
       </p>
-      <button className="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-800">
+      <button className="bg-yellow-500 text-white font-bold py-2 px-5 rounded-full hover:bg-blue-800">
         Get Started
       </button>
     </div>
