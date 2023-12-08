@@ -1,22 +1,36 @@
 // DeleteButton.jsx
 import React, { useState } from 'react';
 import axios from '../Config/api';
+import { useNavigate } from 'react-router-dom';
 
-const DeleteButton = ({ id, resource, deleteCallback }) => {
+const DeleteButton = ({ id, resource, enrolments }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
-  const onDelete = () => {
-    // Show the delete confirmation popup
-    setShowDeletePopup(true);
-  };
+  // const [enrolments, setEnrolments] = useState([enrolments])
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     setIsLoading(true);
   
     let token = localStorage.getItem('token');
   
-    axios
+    console.log(enrolments);
+
+
+    try {
+      if(enrolments?.length > 0) {
+        for(const enrolment of enrolments) {
+          await axios.delete(`/enrolments/${enrolment.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+        }
+      }
+
+      await axios
       .delete(`/${resource}/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -24,27 +38,29 @@ const DeleteButton = ({ id, resource, deleteCallback }) => {
       })
       .then((response) => {
         console.log('Delete response:', response);
-  
-        if (response && response.status === 200) {
-          console.log('Delete success:', response.status, response.data);
-          deleteCallback(); // Trigger callback to handle redirection
-        } else {
-          console.warn('Delete request did not return a success status.');
-        }
+        navigate(`/${resource}`)
       })
       .catch((err) => {
         console.error('Error during delete:', err);
       })
       .finally(() => {
         setIsLoading(false);
-        // Close the popup after deletion
         setShowDeletePopup(false);
       });
+    }
+    catch(err) {
+      console.error(err);
+    }
+    
   };
   
-
   const closeDeletePopup = () => {
     setShowDeletePopup(false);
+  };
+
+  const onDelete = () => {
+    // Show the delete confirmation popup
+    setShowDeletePopup(true);
   };
 
   return (

@@ -7,7 +7,6 @@ import Tagline from '../../Components/Tagline';
 
 const Show = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [course, setCourse] = useState(null);
 
   let token = localStorage.getItem('token');
@@ -67,7 +66,7 @@ const Show = () => {
           <DeleteButton
             id={course.id}
             resource='courses'
-            deleteCallback={() => navigate('/courses')}
+            enrolments={course.enrolments}
           />
       </div>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
 
-const CourseCard = ({ course, authenticated, handleDeleteCallback }) => {
+const CourseCard = ({ course, authenticated }) => {
   return (
     
       <div className="bg-gray-900 p-6 mb-2 rounded-2xl w-full h-full">
@@ -29,7 +29,7 @@ const CourseCard = ({ course, authenticated, handleDeleteCallback }) => {
             <DeleteButton
                 id={course.id}
                 resource="courses"
-                deleteCallback={handleDeleteCallback}
+                enrolments={course.enrolments}
             />
         </div>
       </div>

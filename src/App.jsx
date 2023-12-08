@@ -23,7 +23,6 @@ import LecturersEdit from './Pages/Lecturers/Edit';
 
 //Enrolments Pages
 import EnrolmentsIndex from './Pages/Enrolments/Index';
-import EnrolmentsShow from './Pages/Enrolments/Show';
 import EnrolmentsCreate from './Pages/Enrolments/Create';
 import EnrolmentsEdit from './Pages/Enrolments/Edit';
 import LoginForm from './Pages/LoginForm';
@@ -57,7 +56,6 @@ function App() {
         {/* Enrolments */}
         <Route path='/Enrolments/Create' element={<EnrolmentsCreate />} />
         <Route path='/Enrolments/:id/Edit' element={<EnrolmentsEdit />} />
-        <Route path='/Enrolments/:id' element={<EnrolmentsShow />} />
       </>
     );
   }
