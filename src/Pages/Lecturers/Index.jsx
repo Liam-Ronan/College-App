@@ -44,7 +44,7 @@ const Index = () => {
   return (
     <>
         <div className="container mx-auto p-8">
-      <h2 className="text-3xl text-center font-bold mb-6 py-3">All Lecturers</h2>
+        <h2 className="text-3xl text-center font-medium mb-3 py-3">All <strong className='font-colour underline underline-offset-8 '>Lecturers</strong></h2>
 
       <div className='flex justify-center'>
         <p className='text-xl text-center font-bold mb-6 max-w-4xl'>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from '../../Config/api';
 import { useAuth } from '../../Contexts/AuthContext';
 
+
 import Tagline from '../../Components/Tagline';
 import CourseCard from '../../Components/CourseCard';
 
@@ -43,15 +44,17 @@ const Index = () => {
     return (
       <>
         <div className="container mx-auto p-8">
-          <h2 className="text-3xl text-center font-bold mb-6 py-3">All Courses</h2>
+          <h2 className="text-3xl text-center font-medium mb-3 py-3">All <strong className='font-colour underline underline-offset-8 '>Courses</strong></h2>
 
           <div className="flex justify-center">
-            <p className="text-xl text-center font-bold mb-6 max-w-2xl">
+            <p className="text-2xl text-center font-light mb-6 max-w-2xl">
               Explore a diverse array of courses designed to ignite curiosity, enhance skills, and foster continuous learning, empowering you to thrive in your educational journey.
             </p>
           </div>
+
+        
   
-          <Link to="/Courses/Create" className="text-[#edb51c] font-medium mb-6 block">
+          <Link to="/Courses/Create" className="text-[#edb51c] font-medium mb-6">
             <button className='bg-[#edb51c] text-white font-bold ml-10 py-2 mb-5 px-5 rounded-full'>
               Create A Course
             </button>

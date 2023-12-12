@@ -11,7 +11,7 @@ import Tagline from '../Components/Tagline';
 
 const Popup = ({ message, onClose }) => (
   <div className="popup">
-    <p>{message}</p>
+    <p className='font-light text-3xl font-colour underline underline-offset-8 font-bold'>{message}</p>
   </div>
 );
 

@@ -6,8 +6,16 @@ import Tagline from '../../Components/Tagline';
 
 const Create = () => {
 
+  const Popup = ({ message, onClose }) => (
+      <div className="popup bg-[#edb51c] p-5 w-full">
+        <h1 className='font-light text-4xl text-white font-bold'>{message}</h1>
+      </div>
+  );
+
+  const [showPopup, setShowPopup] = useState(false);
+
     const errorStyle = {
-      color: 'red'
+      color: 'red',
     };
 
     const navigate = useNavigate();
@@ -56,6 +64,7 @@ const Create = () => {
 
     if(isRequired(['title', 'description', 'code', 'points', 'level'])){
         let token = localStorage.getItem('token');
+        let timeoutId;
 
         axios.post('/courses', form, {
             headers: {
@@ -63,28 +72,43 @@ const Create = () => {
             }
         })
         .then(response => {
-            navigate('/Courses');
+            setShowPopup(true)
+
+            timeoutId = setTimeout(() => {
+              setShowPopup(false);
+              navigate('/courses');
+            }, 3000);
+
         })
         .catch(err => {
           console.error('Error Response:', err.response);
         });
-      
     }
   };
 
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
+
   return (
     <>
-      <div className='p-8'>
+      <div className='p-8 bg-gray-900 text-white'>
+
+    
+        <h1 className='text-center font-semibold text-[24px] py-5 text-white'>{showPopup && <Popup message="Course Created" onClose={closePopup} />}</h1>
+      
+
       <h2 className='text-center p-3 text-4xl font-medium'>Create<strong className='font-colour font-bold'> Course</strong></h2>
       <div className='flex justify-center items-center'> 
         <form className='w-1/2' onSubmit={submitForm}>
 
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 font-sans w-full'>
+            <div className='mb-4 text-lg font-semibold mb-2 font-sans w-full'>
               
                 <h2 className='ml-3 p-2'>Title: </h2>
                 <input 
                     type='text' 
-                    className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
+                    className='w-full p-3 border text-black border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
                     onChange={handleForm} 
                     value={form.title} 
                     name='title'
@@ -94,12 +118,12 @@ const Create = () => {
              
             </div>
 
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
              
                 <h2 className='ml-3 p-2'>Code: </h2>
                  <input 
                     type='text' 
-                    className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
+                    className='w-full p-3 border text-black border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
                     onChange={handleForm} 
                     value={form.code} 
                     name='code'
@@ -109,12 +133,12 @@ const Create = () => {
               
             </div>
            
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
             
                 <h2 className='ml-3 p-2'>Description:</h2>
                  <input 
                     type='text' 
-                    className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
+                    className='w-full p-3 border text-black border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
                     onChange={handleForm} 
                     value={form.description} 
                     name='description'
@@ -124,12 +148,12 @@ const Create = () => {
            
             </div>
 
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
               
             <h2 className='ml-3 p-2'>Points:</h2>
                  <input 
                   type='text' 
-                  className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
+                  className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
                   onChange={handleForm} 
                   value={form.points} 
                   name='points'
@@ -140,12 +164,12 @@ const Create = () => {
             </div>
            
 
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
               
             <h2 className='ml-3 p-2'>Level:</h2>
                 <input 
                   type='text' 
-                  className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
+                  className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
                   onChange={handleForm} 
                   value={form.level} 
                   name='level'
@@ -156,7 +180,7 @@ const Create = () => {
             </div>
 
             <div className='text-center flex justify-center pt-5'>
-              <input className='bg-[#edb51c] text-white font-bold py-2 mb-5 px-10 rounded-full' type='submit' />
+              <input className='bg-[#edb51c] text-white font-bold py-2 mb-5 px-10 rounded-full cursor-pointer' type='submit' />
             </div>
             
         </form>
