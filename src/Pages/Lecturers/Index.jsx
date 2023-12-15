@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../Config/api';
 import { useAuth } from '../../Contexts/AuthContext';
+import { IoCodeSlash } from 'react-icons/io5';
 
-import DeleteButton from '../../Components/DeleteButton';
+import CreateLecturerButton from '../../Components/Lecturers/CreateLecturerButton';
+
 import Tagline from '../../Components/Tagline';
 
-import LecturersCard from '../../Components/LecturersCard';
+import LecturersCard from '../../Components/Lecturers/LecturersCard';
 
 const Index = () => {
   const { authenticated } = useAuth();
@@ -42,20 +44,19 @@ const Index = () => {
 ));
 
   return (
-    <>
-        <div className="container mx-auto p-8">
-        <h2 className="text-3xl text-center font-medium mb-3 py-3">All <strong className='font-colour underline underline-offset-8 '>Lecturers</strong></h2>
+    <div className='bg-gray-900'>
+        <div className="container mx-auto">
+        <div className='flex justify-center'>
+              <IoCodeSlash className='outline-double text-8xl p-3 rounded-xl  font-colour m-8' />
+        </div>
+          <h2 className="text-4xl text-center font-medium mb-3 py-3 text-white">All <strong className='font-colour underline underline-offset-8 '>Lecturers</strong></h2>
 
       <div className='flex justify-center'>
-        <p className='text-xl text-center font-bold mb-6 max-w-4xl'>
+        <p className='text-white text-2xl text-center font-light mb-6 max-w-4xl'>
         Lecturers are the heart of the educational journey, guiding students with wisdom and enthusiasm. Their dedication goes beyond imparting knowledge; it ignites a passion for learning. In classrooms led by these educators, diverse perspectives flourish, and critical thinking becomes second nature..</p>
       </div>
 
-      <Link to="/Lecturers/Create" className="text-[#edb51c] font-medium mb-6 block">
-        <button className='bg-[#edb51c] text-white font-bold ml-10 py-2 mb-5 px-5 rounded-full'>
-            Create A Lecturer
-        </button>
-      </Link>
+      <CreateLecturerButton />
 
       <div className="flex flex-wrap mx-4">
         {lecturersList}
@@ -63,7 +64,7 @@ const Index = () => {
       
     </div>
     <Tagline />
-    </>
+    </div>
     
     
   );

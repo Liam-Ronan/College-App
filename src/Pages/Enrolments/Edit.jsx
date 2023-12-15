@@ -130,18 +130,18 @@ const Create = () => {
   if(!enrolments) return <h3>Course not found</h3>
 
   return (
-    <>
+    <div className='p-8 bg-gray-900 text-white'>
       <div className='p-8'>
       <h2 className='text-center p-3 text-4xl font-medium'>Edit<strong className='font-colour font-bold'> Enrolment</strong></h2>
       <div className='flex justify-center items-center'> 
         <form className='w-1/2' onSubmit={submitForm}>
 
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 font-sans w-full'>
+            <div className='mb-4 text-lg font-semibold mb-2 font-sans w-full'>
               
                 <h2 className='ml-3 p-2'>Date: </h2>
                 <input 
                     type='date' 
-                    className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
+                    className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
                     onChange={handleForm} 
                     value={form.date} 
                     name='date'
@@ -151,12 +151,12 @@ const Create = () => {
              
             </div>
 
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
              
                 <h2 className='ml-3 p-2'>Time: </h2>
                  <input 
                     type='time' 
-                    className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
+                    className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
                     onChange={handleForm} 
                     value={form.time} 
                     name='time'
@@ -165,12 +165,12 @@ const Create = () => {
                  <span style={errorStyle}>{errors.time?.message}</span> 
             </div>
            
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
             
                 <h2 className='ml-3 p-2'>Status:</h2>
 
                 <select
-                  className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                  className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
                   onChange={handleForm}
                   value={form.status}
                   name='status'
@@ -188,11 +188,11 @@ const Create = () => {
               <span style={errorStyle}>{errors.status?.message}</span>
             </div>
 
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
               
             <h2 className='ml-3 p-2'>Course:</h2>
               <select
-                className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
                 onChange={handleForm}
                 value={form.course_id}
                 name='course_id'
@@ -213,11 +213,11 @@ const Create = () => {
             </div>
            
 
-            <div className='mb-4 text-gray-900 text-lg font-bold font-bold mb-2 p-2 font-sans'>
+            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
               
             <h2 className='ml-3 p-2'>Lecturer:</h2>
               <select
-                className='w-full p-3 border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
                 onChange={handleForm}
                 value={form.lecturer_id}
                 name='lecturer_id'
@@ -245,7 +245,7 @@ const Create = () => {
       </div>
     </div>
     <Tagline />
-    </>
+    </div>
     
   )
 }

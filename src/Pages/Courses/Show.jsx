@@ -5,6 +5,8 @@ import axios from '../../Config/api';
 import DeleteButton from '../../Components/DeleteButton';
 import Tagline from '../../Components/Tagline';
 
+import EditCourseButton from '../../Components/Courses/EditCourseButton';
+
 const Show = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
@@ -58,11 +60,9 @@ const Show = () => {
         <hr className='py-1' />
       </div>
       <div className='flex space-x-6'>
-        <Link to={`/Courses/${id}/Edit`}>
-          <button className='bg-blue-500 text-white font-bold py-2 mt-3 px-5 rounded-full'>
-            Edit Course
-          </button>
-        </Link>
+            <EditCourseButton
+              course={course}
+            />
           <DeleteButton
             id={course.id}
             resource='courses'

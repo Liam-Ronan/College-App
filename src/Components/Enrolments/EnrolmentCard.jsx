@@ -1,27 +1,28 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DeleteButton from './DeleteButton';
+import DeleteButton from '../DeleteButton';
+import EditEnrolmentButton from './EditEnrolmentButton';
 
 const EnrolmentCard = ({ enrolment, authenticated }) => {
   return (
-    <div className="bg-gray-900 p-6 mb-2 rounded-2xl w-full h-full">
+    <div className="bg-gradient-to-r from-blue-800 to-blue-400 p-6 mb-2 rounded-2xl w-full h-full">
 
         {(authenticated) ? (
             <>
-                <p className="mb-2 text-white">
+                <p className="mb-2 text-white font-light text-2xl">
                     <b >Course: </b> 
-                        <Link className='text-blue-500' to={`/courses/${enrolment.course.id}`}>{enrolment.course.title}
+                        <Link className='text-white font-semibold' to={`/courses/${enrolment.course.id}`}>{enrolment.course.title}
                     </Link>
                 </p>
 
-                <p className="text-white">
+                <p className="mb-2 text-white font-light text-2xl pb-2">
                     <b>Lecturer: </b> 
-                        <Link className='text-blue-500' to={`/lecturers/${enrolment.lecturer.id}`}>{enrolment.lecturer.name}
+                        <Link className='text-white font-semibold' to={`/lecturers/${enrolment.lecturer.id}`}>{enrolment.lecturer.name}
                     </Link>
                 </p>
 
-                <p className="mb-2 text-white font-medium"><b>Status: {enrolment.status}</b></p>
+                <p className="mb-2 text-white font-light text-xl pb-2"><b>Status: {enrolment.status}</b></p>
             </>
         ) : (
             <>
@@ -34,11 +35,9 @@ const EnrolmentCard = ({ enrolment, authenticated }) => {
 
         <div className="flex flex-gap gap-4">
 
-            <Link to={`/Enrolments/${enrolment.id}/Edit`}>
-                <button className="bg-blue-500 text-white font-bold py-2 mt-3 px-5 rounded-full">
-                Edit Enrolment
-                </button>
-            </Link>
+            <EditEnrolmentButton
+                enrolment={enrolment}
+            />
 
             <DeleteButton
                 id={enrolment.id}
