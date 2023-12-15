@@ -3,6 +3,9 @@ import axios from '../../Config/api';
 import { useAuth } from '../../Contexts/AuthContext';
 import { IoSchool } from 'react-icons/io5';
 
+//Import search bar
+import SearchBar from '../../Components/SearchBar';
+
 //Import Course Comps
 import CreateCourseButton from '../../Components/Courses/CreateCourseButton';
 import CourseCard from '../../Components/Courses/CourseCard';
@@ -10,12 +13,16 @@ import CourseCard from '../../Components/Courses/CourseCard';
 import Tagline from '../../Components/Tagline';
 
 
+
 const Index = () => {
     const { authenticated } = useAuth();
     const token = localStorage.getItem('token');
   
     const [courses, setCourses] = useState([]);
-    
+
+    //Search State Variables
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredCourses, setFilteredCourses] = useState([]);
   
     useEffect(() => {
       axios
@@ -32,17 +39,26 @@ const Index = () => {
           console.error(error);
         });
     }, [token, courses]);
-  
 
-  
-    const coursesList = courses.map((course) => (
-        <div key={course.id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 mb-8 p-8">
-        <CourseCard
-          course={course}
-          authenticated={authenticated}    
-        />
-      </div>
-    ));
+
+    //Search Functions
+    const handleSearchInputChange = (e) => {
+      setSearchTerm(e.target.value);
+    }
+
+    const handleSearchSubmit = (e) => {
+      e.preventDefault();
+
+      //Filtering through courses to match course title
+      const filtered = courses.filter((course) => 
+        course.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+
+      setFilteredCourses(filtered);
+    }
+
+    //If searchTerm is true - return the filtered courses, if false return just courses
+    const coursesToMap = searchTerm ? filteredCourses : courses;
   
     return (
       <div className='bg-gray-900'>
@@ -59,9 +75,18 @@ const Index = () => {
           </div>
 
           <CreateCourseButton />
+
+          <SearchBar 
+            searchTerm={searchTerm}
+            handleSearchInputChange={handleSearchInputChange}
+            handleSearchSubmit={handleSearchSubmit}
+          />
   
           <div className="flex flex-wrap -mx-4">
-            {coursesList}
+            <CourseCard
+              courses={coursesToMap}
+              authenticated={authenticated}    
+            />
           </div>
         </div>
         <Tagline />

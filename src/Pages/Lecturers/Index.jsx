@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from '../../Config/api';
 import { useAuth } from '../../Contexts/AuthContext';
 import { IoCodeSlash } from 'react-icons/io5';
+import SearchBar from '../../Components/SearchBar';
 
 import CreateLecturerButton from '../../Components/Lecturers/CreateLecturerButton';
 
@@ -16,6 +17,8 @@ const Index = () => {
 
   const [lecturers, setLecturers] = useState([]);
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredLecturers, setFilteredlecturers] = useState([]);
 
   useEffect(() => {
     axios
@@ -33,15 +36,21 @@ const Index = () => {
       });
   }, [token, lecturers]);
 
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value)
+  }
 
-  const lecturersList = lecturers.map((lecturer) => (
-    <div key={lecturer.id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 mb-8 p-8">
-    <LecturersCard
-      lecturer={lecturer}
-      authenticated={authenticated}
-    />
-  </div>
-));
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+
+    const filtered = lecturers.filter((lecturer) => (
+      lecturer.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ))
+
+    setFilteredlecturers(filtered);
+  }
+
+  const lecturersToMap = searchTerm ? filteredLecturers : lecturers;
 
   return (
     <div className='bg-gray-900'>
@@ -58,8 +67,17 @@ const Index = () => {
 
       <CreateLecturerButton />
 
+      <SearchBar
+        searchTerm={searchTerm}
+        handleSearchInputChange={handleSearchInputChange}
+        handleSearchSubmit={handleSearchSubmit}
+      />
+
       <div className="flex flex-wrap mx-4">
-        {lecturersList}
+        <LecturersCard 
+          lecturers={lecturersToMap}
+          authenticated={authenticated}
+        />
       </div>
       
     </div>
