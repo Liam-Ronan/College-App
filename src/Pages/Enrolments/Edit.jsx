@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import React from 'react'
 import Tagline from '../../Components/Tagline';
+import Popup from '../../Components/Popup';
 
 const Create = () => {
     const token = localStorage.getItem('token');
@@ -14,6 +15,7 @@ const Create = () => {
     const [courses, setCourses] = useState([]);
     const [lecturers, setLecturers] = useState([]);
     const [enrolments, setEnrolments] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
       axios.get(`/enrolments/${id}`, {
@@ -111,6 +113,7 @@ const Create = () => {
 
     if(isRequired(['date', 'time', 'status', 'course_id', 'lecturer_id'])){
         let token = localStorage.getItem('token');
+        let timeoutId;
 
         axios.put(`/enrolments/${id}`, form, {
             headers: {
@@ -118,7 +121,12 @@ const Create = () => {
             }
         })
         .then(response => {
+          setShowPopup(true);
+
+          timeoutId = setTimeout(() => {
+            setShowPopup(false);
             navigate(`/enrolments/`);
+          }, 5000);
         })
         .catch(err => {
           console.error('Error Response:', err.response);
@@ -127,10 +135,19 @@ const Create = () => {
     }
   };
 
-  if(!enrolments) return <h3>Course not found</h3>
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
+  if(!enrolments) return <h3>Enrolment not found</h3>
 
   return (
     <div className='p-8 bg-gray-900 text-white'>
+
+      <h1 className='flex justify-center text-[24px] p-5 text-white'>
+          {showPopup && <Popup message={`Enrolment Edited`} onClose={closePopup} />}
+      </h1>
+
       <div className='p-8'>
       <h2 className='text-center p-3 text-4xl font-medium'>Edit<strong className='font-colour font-bold'> Enrolment</strong></h2>
       <div className='flex justify-center items-center'> 

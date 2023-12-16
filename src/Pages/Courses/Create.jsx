@@ -1,83 +1,101 @@
+// Create.jsx
 import axios from '../../Config/api';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import React from 'react'
+import React from 'react';
+import Popup from '../../Components/Popup'; // Import the Popup component
 import Tagline from '../../Components/Tagline';
 
 const Create = () => {
-
-  const Popup = ({ message, onClose }) => (
-      <div className="popup bg-[#edb51c] p-5 w-full">
-        <h1 className='font-light text-4xl text-white font-bold'>{message}</h1>
-      </div>
-  );
-
   const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
 
-    const errorStyle = {
-      color: 'red',
-    };
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    code: "",
+    points: "",
+    level: "",
+  });
 
-    const navigate = useNavigate();
-    const [errors, setErrors] = useState({});
+  const handleForm = (e) => {
+    const {name, value} = e.target;
 
-    const [form, setForm] = useState({
-        title: "",
-        description: "",
-        code: "",
-        points: "",
-        level: "",
-	  });
+    let errorMessage = "";
 
-    const handleForm = (e) => {
-      setForm(prevState => ({
+    if (name === "code") {
+      // Validate course code using regex (two characters followed by three numbers)
+      const codeRegex = /^[A-Za-z]{2}\d{3}$/;
+      errorMessage = codeRegex.test(value)
+        ? ""
+        : "Course code must have two characters followed by three numbers.";
+    } 
+    else if (name === "points") {
+      // Validate points using regex (minimum 100, maximum 625)
+      const pointsRegex = /^(?:[1-9]\d{2}|[1-5]\d{2}|6[0-1]\d|625)$/;
+      errorMessage = pointsRegex.test(value)
+        ? ""
+        : "Points must be between 100 and 625.";
+    } 
+    else if (name === "level") {
+      // Validate level using regex (minimum 5, maximum 10)
+      const levelRegex = /^(?:[5-9]|10)$/;
+      errorMessage = levelRegex.test(value)
+        ? ""
+        : "Level must be between 5 and 10.";
+    }
+
+
+    setForm(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: { message: errorMessage },
+    }));
+  };
+
+  const isRequired = (fields) => {
+    let included = true;
+    setErrors({});
+
+    fields.forEach(field => {
+      if (!form[field]) {
+        included = false;
+        setErrors(prevState => ({
           ...prevState,
-          [e.target.name]: e.target.value
-      }));
-    };
-
-    const isRequired = (fields) => {
-
-      let included = true;
-      setErrors({});
-
-      fields.forEach(field => {
-
-          if(!form[field]){
-              included = false;
-              setErrors(prevState => ({
-                  ...prevState,
-                  [field]: {
-                      message: `${field} is required!`
-                  }
-              }));
+          [field]: {
+            message: `${field} is required!`
           }
-          
-      });
+        }));
+      }
+    });
 
-      return included;
-    };
+    return included;
+  };
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log('submitted', form);
 
-    if(isRequired(['title', 'description', 'code', 'points', 'level'])){
-        let token = localStorage.getItem('token');
-        let timeoutId;
+    if (isRequired(['title', 'description', 'code', 'points', 'level'])) {
+      let token = localStorage.getItem('token');
+      let timeoutId;
 
-        axios.post('/courses', form, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
+      axios.post('/courses', form, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
         .then(response => {
-            setShowPopup(true)
+          setShowPopup(true);
 
-            timeoutId = setTimeout(() => {
-              setShowPopup(false);
-              navigate('/courses');
-            }, 3000);
+          timeoutId = setTimeout(() => {
+            setShowPopup(false);
+            navigate('/courses');
+          }, 5000);
 
         })
         .catch(err => {
@@ -90,106 +108,92 @@ const Create = () => {
     setShowPopup(false);
   };
 
-
   return (
     <>
       <div className='p-8 bg-gray-900 text-white'>
 
-    
-        <h1 className='text-center font-semibold text-[24px] py-5 text-white'>{showPopup && <Popup message="Course Created" onClose={closePopup} />}</h1>
-      
+        <h1 className='flex justify-center text-[24px] p-5 text-white'>
+          {showPopup && <Popup message={`${form.title} Created`} onClose={closePopup} />}
+        </h1>
 
-      <h2 className='text-center p-3 text-4xl font-medium'>Create<strong className='font-colour font-bold'> Course</strong></h2>
-      <div className='flex justify-center items-center'> 
-        <form className='w-1/2' onSubmit={submitForm}>
-
-            <div className='mb-4 text-lg font-semibold mb-2 font-sans w-full'>
-              
-                <h2 className='ml-3 p-2'>Title: </h2>
-                <input 
-                    type='text' 
-                    className='w-full p-3 border text-black border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
-                    onChange={handleForm} 
-                    value={form.title} 
-                    name='title'
-                  />
-                
-                <span style={errorStyle}>{errors.title?.message}</span>
-             
+        <h2 className='text-center p-3 text-4xl font-medium'>
+          Create<strong className='font-colour font-bold'> Course</strong>
+        </h2>
+        <div className='flex justify-center items-center'>
+          <form className='w-1/2' onSubmit={submitForm}>
+            <div className='mb-4 text-lg font-semibold mb-2 font-sans'>
+              <h2 className='ml-3 p-2'>Title: </h2>
+              <input
+                type='text'
+                className='w-full p-3 border text-black border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                onChange={handleForm}
+                value={form.title}
+                name='title'
+              />
+              <span style={{ color: 'red' }}>{errors.title?.message}</span>
             </div>
 
             <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
-             
-                <h2 className='ml-3 p-2'>Code: </h2>
-                 <input 
-                    type='text' 
-                    className='w-full p-3 border text-black border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
-                    onChange={handleForm} 
-                    value={form.code} 
-                    name='code'
-                  />
-                 
-                 <span style={errorStyle}>{errors.code?.message}</span>
-              
-            </div>
-           
-            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
-            
-                <h2 className='ml-3 p-2'>Description:</h2>
-                 <input 
-                    type='text' 
-                    className='w-full p-3 border text-black border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
-                    onChange={handleForm} 
-                    value={form.description} 
-                    name='description'
-                  />
-
-                 <span style={errorStyle}>{errors.description?.message}</span>
-           
+              <h2 className='ml-3 p-2'>Code: </h2>
+              <input
+                type='text'
+                className='w-full p-3 border text-black border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                onChange={handleForm}
+                value={form.code}
+                name='code'
+              />
+              <span style={{ color: 'red' }}>{errors.code?.message}</span>
             </div>
 
             <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
-              
-            <h2 className='ml-3 p-2'>Points:</h2>
-                 <input 
-                  type='text' 
-                  className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
-                  onChange={handleForm} 
-                  value={form.points} 
-                  name='points'
-                 />
-                 
-                 <span style={errorStyle}>{errors.points?.message}</span>
-              
+              <h2 className='ml-3 p-2'>Description:</h2>
+              <input
+                type='text'
+                className='w-full p-3 border text-black border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                onChange={handleForm}
+                value={form.description}
+                name='description'
+              />
+              <span style={{ color: 'red' }}>{errors.description?.message}</span>
             </div>
-           
 
             <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
-              
-            <h2 className='ml-3 p-2'>Level:</h2>
-                <input 
-                  type='text' 
-                  className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50' 
-                  onChange={handleForm} 
-                  value={form.level} 
-                  name='level'
-                />
-                
-                <span style={errorStyle}>{errors.level?.message}</span>
-              
+              <h2 className='ml-3 p-2'>Points:</h2>
+              <input
+                type='text'
+                className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                onChange={handleForm}
+                value={form.points}
+                name='points'
+                min="100"
+                max="625"
+              />
+              <span style={{ color: 'red' }}>{errors.points?.message}</span>
+            </div>
+
+            <div className='mb-4 text-lg font-semibold mb-2 p-2 font-sans'>
+              <h2 className='ml-3 p-2'>Level:</h2>
+              <input
+                type='text'
+                className='w-full p-3 text-black border border-gray-300 rounded-3xl ring ring-gray-200 ring-opacity-50'
+                onChange={handleForm}
+                value={form.level}
+                name='level'
+                min="5"
+						    max="10"
+              />
+              <span style={{ color: 'red' }}>{errors.level?.message}</span>
             </div>
 
             <div className='text-center flex justify-center pt-5'>
               <input className='bg-[#edb51c] text-white font-bold py-2 mb-5 px-10 rounded-full cursor-pointer' type='submit' />
             </div>
-            
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
-    <Tagline />
+      <Tagline />
     </>
-    
-  )
-}
+  );
+};
 
 export default Create;

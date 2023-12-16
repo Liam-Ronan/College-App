@@ -4,22 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react'
 import Tagline from '../../Components/Tagline';
 
+import Popup from '../../Components/Popup';
+
 const Create = () => {
 
-  const Popup = ({ message, onClose }) => (
-    <div className="popup bg-[#edb51c] p-5 w-full">
-      <h1 className='font-light text-4xl text-white font-bold'>{message}</h1>
-    </div>
-  );
-
     const [showPopup, setShowPopup] = useState(false);
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState({});
 
     const errorStyle = {
       color: 'red'
     };
-
-    const navigate = useNavigate();
-    const [errors, setErrors] = useState({});
 
     const [form, setForm] = useState({
         name: "",
@@ -29,9 +24,31 @@ const Create = () => {
 	  });
 
     const handleForm = (e) => {
-      setForm(prevState => ({
-          ...prevState,
-          [e.target.name]: e.target.value
+      const { name, value } = e.target;
+      let errorMessage = "";
+    
+      if (name === "phone") {
+        // Validate phone number using regex (in the format of 085-2243211)
+        const phoneRegex = /^\d{3}-\d{7}$/;
+        errorMessage = phoneRegex.test(value)
+          ? ""
+          : "Phone number must be in the format of 000-0000000.";
+      }
+      else if(name === "address") {
+        const addressRegex = /^\d+.+[a-zA-Z]/i;
+        errorMessage = addressRegex.test(value)
+        ? ""
+        : "Address must contain a house number followed by characters.";
+      }
+      
+      setForm((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: { message: errorMessage },
       }));
     };
 
@@ -76,7 +93,7 @@ const Create = () => {
           timeoutId = setTimeout(() => {
             setShowPopup(false);
             navigate('/lecturers');
-          }, 3000);
+          }, 5000);
         })
         .catch(err => {
           console.error('Error Response:', err.response);
@@ -93,7 +110,7 @@ const Create = () => {
     <>
     <div className='p-8 bg-gray-900 text-white'>
 
-    <h1 className='text-center font-semibold text-[24px] py-5 text-white'>{showPopup && <Popup message="Lecturer Created" onClose={closePopup} />}</h1>
+    <h1 className='flex justify-center font-semibold text-[24px] p-5 text-white'>{showPopup && <Popup message={`${form.name} Created`} onClose={closePopup} />}</h1>
 
     <h2 className='text-center p-3 text-4xl font-medium'>Create<strong className='font-colour font-bold'> Lecturer</strong></h2>
     <div className='flex justify-center items-center'> 

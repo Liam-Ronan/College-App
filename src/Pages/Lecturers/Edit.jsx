@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../../Config/api';
 import React from 'react'
 import Tagline from '../../Components/Tagline';
+import Popup from '../../Components/Popup';
 
 const Edit = () => {
 
@@ -10,6 +11,7 @@ const Edit = () => {
   const { id } = useParams();
   const [lecturer, setLecturer] = useState(null);
   const [errors, setErrors] = useState({});
+  const [showPopup, setShowPopup] = useState(false);
 
   const [form, setForm] = useState({
       name: "",
@@ -42,9 +44,31 @@ const Edit = () => {
   }, [id]);
 
   const handleForm = (e) => {
-    setForm(prevState => ({
-        ...prevState,
-        [e.target.name]: e.target.value
+    const { name, value } = e.target;
+    let errorMessage = "";
+  
+    if (name === "phone") {
+      // Validate phone number using regex (in the format of 085-2243211)
+      const phoneRegex = /^\d{3}-\d{7}$/;
+      errorMessage = phoneRegex.test(value)
+        ? ""
+        : "Phone number must be in the format of 000-0000000.";
+    }
+    else if(name === "address") {
+      const addressRegex = /^\d+.+[a-zA-Z]/i;
+      errorMessage = addressRegex.test(value)
+      ? ""
+      : "Address must contain a house number followed by characters.";
+    }
+    
+    setForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: { message: errorMessage },
     }));
   };
 
@@ -70,31 +94,46 @@ const Edit = () => {
     return included;
 	};
 
-const submitForm = (e) => {
-  e.preventDefault();
-  console.log('submitted', form);
+  const submitForm = (e) => {
+    e.preventDefault();
+    console.log('submitted', form);
 
-  if(isRequired(['name', 'address', 'email', 'phone'])){
-      let token = localStorage.getItem('token');
+    if(isRequired(['name', 'address', 'email', 'phone'])){
+        let token = localStorage.getItem('token');
+        let timeoutId;
 
-      axios.put(`/lecturers/${id}`, form, {
-          headers: {
-              "Authorization": `Bearer ${token}`
-          }
-      })
-      .then(response => {
-          navigate(`/lecturers/${id}`);
-      })
-      .catch(err => {
-          console.error(err);
-      });
-  }
-};
+        axios.put(`/lecturers/${id}`, form, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            setShowPopup(true);
+
+              timeoutId = setTimeout(() => {
+                setShowPopup(false);
+                navigate(`/lecturers/${id}`);
+              }, 5000);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
 
   if(!lecturer) return <h3>Lecturer not found</h3>
 
   return (
     <div className='p-8 bg-gray-900 text-white'>
+
+       <h1 className='flex justify-center text-[24px] p-5 text-white'>
+          {showPopup && <Popup message={`${lecturer.name} Edited`} onClose={closePopup} />}
+      </h1>
+
       <div className='p-8'>
         <h2 className='text-center p-3 text-4xl font-medium'>Edit<strong className='font-colour font-bold'> Lecturer</strong></h2>
         <div className='flex justify-center items-center'> 
