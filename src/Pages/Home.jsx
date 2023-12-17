@@ -2,18 +2,12 @@ import React, { useEffect, useState } from 'react';
 import LoginForm from './LoginForm';
 import { useAuth } from '../Contexts/AuthContext';
 
-
 import Hero from '../Components/Hero';
 import Sponsors from '../Components/Sponsors';
 import Features from '../Components/Features';
 import Tagline from '../Components/Tagline';
 
-
-const Popup = ({ message, onClose }) => (
-  <div className="popup">
-    <p className='font-light text-3xl font-colour underline underline-offset-8 font-bold'>{message}</p>
-  </div>
-);
+import Popup from '../Components/Popup';
 
 const Home = () => {
   const { authenticated } = useAuth();
@@ -48,12 +42,11 @@ const Home = () => {
         <LoginForm />
       ) : (
         <>
-          <h1 className='text-center font-semibold text-[24px] py-5 text-white'>{showPopup && <Popup message="You are authenticated" onClose={closePopup} />}</h1>
+          <h1 className='flex justify-center font-semibold text-[24px] py-5 text-white'>{showPopup && <Popup message="You are authenticated" onClose={closePopup} />}</h1>
           <Hero />
           <Sponsors />
           <Features />
           <Tagline />
-         
         </>
       )}
     </div>

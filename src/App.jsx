@@ -25,6 +25,8 @@ import LecturersEdit from './Pages/Lecturers/Edit';
 import EnrolmentsIndex from './Pages/Enrolments/Index';
 import EnrolmentsCreate from './Pages/Enrolments/Create';
 import EnrolmentsEdit from './Pages/Enrolments/Edit';
+
+//Other
 import LoginForm from './Pages/LoginForm';
 import Footer from './Components/Footer';
 

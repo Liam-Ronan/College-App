@@ -10,8 +10,6 @@ import '../App.css'
 import CollegeSVG from '../Assets/Cartoons/Online learning-cuate.svg';
 import gradPNG from '../../public/graduation-hat.png';
 
-
-
 const LoginForm = () => {
     const { onAuthenticated } = useAuth();
     const navigate = useNavigate()

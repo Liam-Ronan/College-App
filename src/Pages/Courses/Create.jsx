@@ -19,6 +19,7 @@ const Create = () => {
     level: "",
   });
 
+  //Form Validation
   const handleForm = (e) => {
     const {name, value} = e.target;
 
@@ -45,7 +46,6 @@ const Create = () => {
         ? ""
         : "Level must be between 5 and 10.";
     }
-
 
     setForm(prevState => ({
       ...prevState,
